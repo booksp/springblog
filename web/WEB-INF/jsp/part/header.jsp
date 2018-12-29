@@ -9,6 +9,7 @@
 <c:url var="bootstrapjs" value="/js/bootstrap.min.js"/>
 <c:url var="myjs" value="/js/myjs.js"/>
 
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="${icon}">
 <link rel="stylesheet" href="${bootstrapcss}"/>

@@ -39,11 +39,9 @@ public class ArticleController {
 
     @RequestMapping("/add")
     public String add(Article article, HttpServletRequest request) {
-
         ServletContext context = request.getServletContext();
-        MultipartFile image = article.getImage();
+        MultipartFile image     = article.getImage();
         MultipartFile articleHtml = article.getArticle();
-
 
         String imagePath = context.getRealPath("img/") + image.getOriginalFilename();
         String articlePath = context.getRealPath("static/articles/") + articleHtml.getOriginalFilename();
@@ -55,8 +53,8 @@ public class ArticleController {
             e.printStackTrace();
         }
 
-        article.setUrl("/img/" + image.getOriginalFilename());
-        article.setImgUrl("/static/articles/" + image.getOriginalFilename());
+        article.setUrl("/static/articles/" + articleHtml.getOriginalFilename());
+        article.setImgUrl( "/img/"+ image.getOriginalFilename());
         articleService.release(article);
 
         return "redirect:/article/list";
