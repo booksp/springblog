@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -23,14 +25,20 @@ public class ArticleController {
     private AirticleService articleService;
 
     @RequestMapping("/release")
-    public String release(HttpSession session){
-        List types = articleService.getTypes();
-        session.setAttribute("types", types);
-      return "/article/release";
+    public String release(HttpSession session, RedirectAttributes redirectAttributes) {
+        String user = (String) session.getAttribute("user");
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("message", "暂不支持未登录用户发布文章");
+            return "redirect:/error";
+        } else {
+            List types = articleService.getTypes();
+            session.setAttribute("types", types);
+            return "/article/release";
+        }
     }
 
     @RequestMapping("/add")
-    public String add(Article article, HttpServletRequest request){
+    public String add(Article article, HttpServletRequest request) {
 
         ServletContext context = request.getServletContext();
         MultipartFile image = article.getImage();
@@ -54,28 +62,41 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
-    @RequestMapping("/delete/{id}")
-    public void delete(@PathVariable long id){
-        articleService.delete(id);
+    @RequestMapping("/manage")
+    public String manage(HttpSession session, RedirectAttributes redirectAttributes) {
+        String user = (String) session.getAttribute("user");
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("message", "暂不支持未登录用户执行该操作");
+            return "redirect:/error";
+        } else {
+            return "/article/manage";
+        }
+    }
 
-        return;
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.POST, RequestMethod.GET})
+    public String delete(@PathVariable long id, HttpSession session) {
+        articleService.delete(id);
+        session.removeAttribute("articles");
+        List articles = articleService.loadPage(0, 20);
+        session.setAttribute("articles", articles);
+        return "/article/manage";
     }
 
     @RequestMapping("/update")
-    public void update(Article article){
+    public void update(Article article) {
         articleService.update(article);
 
         return;
     }
 
     @RequestMapping("/list")
-    public String list(HttpSession session){
+    public String list(HttpSession session) {
         List articles = articleService.loadPage(0, 20);
         List types = articleService.getTypes();
         session.setAttribute("articles", articles);
         session.setAttribute("types", types);
 
-        return "index" ;
+        return "index";
     }
 
 

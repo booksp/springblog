@@ -27,52 +27,58 @@
 
 <div class="container">
     <form class="form-horizontal" action="/article/add" enctype="multipart/form-data" method="post">
-            <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col-md-7 col-sm-12">
                 <label for="title">标题</label>
                 <input type="text" class="form-control form-control-lg" id="title" name="title" path="title" placeholder="标题">
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3 col-sm-12">
                 <label for="author" class="control-label">作者</label>
-                <input type="text" class="form-control form-control-lg" id="author" name="author" path="author" placeholder="作者">
+                <input type="text" class="form-control form-control-lg" id="author" name="author" path="author"
+                       placeholder="作者">
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-2 col-sm-12">
                 <label for="type" class="control-label">分类</label>
-                    <select class="form-control form-control-lg" id="type" name="type" path="type">
-                        <c:forEach var="type" items="${types}">
-                            <option value="${type}">${type}</option></c:forEach>
-                    </select>
+                <select class="form-control form-control-lg" id="type" name="type" path="type">
+                    <c:forEach var="type" items="${types}">
+                        <option value="${type}">${type}</option>
+                    </c:forEach>
+                </select>
             </div>
-            <div class="form-group">
-                <label for="type" class="control-label">简介</label>
-                <textarea class="form-control form-control-lg" id="intro" name="intro" rows="6" path="intro" placeholder="."></textarea>
-            </div>
-            <div class="form-group">
+        </div>
+        <div class="form-group">
+            <label for="intro" class="control-label">简介</label>
+            <textarea class="form-control form-control-lg" id="intro" name="intro" rows="6" path="intro"
+                      placeholder="."></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="airticleImg" name="image" path="image">
-                    <label class="custom-file-label" for="airticleImg" >上传图像 (.jpeg .png .jpg)</label>
+                    <label class="custom-file-label" for="airticleImg">上传图像 (.jpeg .png .jpg)</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6 col-sm-12">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="article" name="article" path="image">
                     <label class="custom-file-label" for="article">上传文章 (.html )</label>
                 </div>
             </div>
-
-
-            <div class="row">
-                <div class="col"></div>
-                <div class="col">
-                    <button type="button" class="btn btn-info">保存</button>
-                </div>
-                <div class="col"></div>
-                <div class="col">
-                    <button type="submit" class="btn btn-success">发布</button>
-                </div>
-                <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <button type="button" class="btn btn-info">保存</button>
             </div>
+            <div class="col"></div>
+            <div class="col">
+                <button type="submit" class="btn btn-success">发布</button>
+            </div>
+            <div class="col"></div>
+        </div>
     </form>
 </div>
 
+<jsp:include page="../part/footer.jsp"></jsp:include>
 </body>
 </html>
