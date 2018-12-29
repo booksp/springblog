@@ -1,0 +1,14 @@
+.plain{
+    color: #333333;
+}
+
+.list-image{
+    width: 140px;
+    height: 140px;
+    float: left;
+}
+
+#showuser{
+   display : none ;
+}
+

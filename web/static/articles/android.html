@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>android 开发</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+
+<h1 id="windows%E4%B8%8B%E5%88%9B%E5%BB%BAandroid%E9%A1%B9%E7%9B%AE">windows下创建android项目</h1>
+<h2 id="%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86">基础知识</h2>
+<h4 id="%E5%8D%95%E4%BD%8D">单位</h4>
+<ul>
+<li>dp(dip) device independent pixels (设备独立像素)</li>
+<li>px(pixels)</li>
+<li>pt(point) 1pt = 1/72 英寸</li>
+<li>sp(scaled pixels)</li>
+</ul>
+<h2 id="%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">环境配置</h2>
+<h3 id="%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">环境变量</h3>
+<ul>
+<li>
+<p>C:\Program Files\Android-SDK-Manager\tools</p>
+</li>
+<li>
+<p>C:\Program Files\Android-SDK-Manager\platform-tools</p>
+</li>
+<li>
+<p>ANT_HOME  C:\Program Files\apache-ant-1.10.5</p>
+</li>
+<li>
+<p>gradle4.1 C:\Program Files\Android Studio\gradle\gradle-4.1\bin</p>
+</li>
+</ul>
+<h3 id="gradle-%E4%BB%93%E5%BA%93%E8%AE%BE%E7%BD%AE">gradle 仓库设置</h3>
+<pre><code>maven{
+        url 'http://maven.aliyun.com/nexus/content/groups/public/'
+    }
+</code></pre>
+<h2 id="%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E9%BB%98%E8%AE%A4ant%E6%9E%84%E5%BB%BA">创建项目(默认ant构建)</h2>
+<pre><code>android create project --target android-23 --package com.example.foo --name Foo --activity HelloWorldAcitvity --path .\MyAndroidd
+</code></pre>
+<ul>
+<li>--name 生成的.apk文件名称</li>
+<li>--gradle 使用Gradle 格式</li>
+<li>--gradleversion Gradle版本</li>
+</ul>
+<h3 id="%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95">项目目录</h3>
+<ul>
+<li>AndroidManifext.xml 告知Android新建项目有关内容的配置文件</li>
+<li>bin 生成的二进制代码文件(编译好的类文件)</li>
+<li>build.properties 可编辑的属性文件</li>
+<li>build.xml Ant构建控制文件</li>
+<li>project.properties 保存所用到的SDK版本和库</li>
+<li>其他已知文件</li>
+</ul>
+<h3 id="%E5%88%9B%E5%BB%BAgradle%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE">创建gradle构建项目</h3>
+<pre><code>android create project --target android-23 --package com.example.foo --gradle --gradle-version 4.6
+</code></pre>
+<p>--name Foo --activity HelloWorldActivity --path HelloGradle</p>
+<h3 id="%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE">构建项目</h3>
+<ul>
+<li>
+<p>ant 构建</p>
+<p>ant debug</p>
+</li>
+<li>
+<p>gradle 构建</p>
+<p>gradlew build</p>
+</li>
+</ul>
+<h3 id="%E9%83%A8%E7%BD%B2%E5%88%B0%E8%99%9A%E6%8B%9F%E6%9C%BA">部署到虚拟机</h3>
+<pre><code>android create avd -n my_droid -t 2 --abi default/x86_64
+</code></pre>
+<ul>
+<li>
+<p>android 调试桥服务器与模拟器进行通信</p>
+<p>adb start-server
+emulator -avd my_droid</p>
+</li>
+</ul>
+<h2 id="adb-%E4%BD%BF%E7%94%A8">adb 使用</h2>
+<ul>
+<li>安装应用
+adb install package.apk</li>
+<li>卸载应用
+adb uninstall com.exaple.packageName</li>
+<li>shell 打开手机shell
+adb shell</li>
+<li>查看日志
+adb logcat</li>
+</ul>
+<h3 id="ant-%E7%9A%84%E7%BC%BA%E7%82%B9">ant 的缺点</h3>
+<p>ant 自身无法处理依赖项，而maven提供依赖项管理功能，maven是java环境中使用最广泛的构建工具</p>
+<h2 id="%E6%B5%8B%E8%AF%95">测试</h2>
+<h3 id="%E5%B8%B8%E7%94%A8%E7%BC%A9%E7%95%A5%E7%9F%AD%E8%AF%AD">常用缩略短语</h3>
+<ul>
+<li>NPE (NUll Pointer Exception)</li>
+<li>ANR (Application Not Responding</li>
+<li>FC (Force Close)</li>
+</ul>
+<h3 id="android-studio">Android Studio</h3>
+<ul>
+<li>查看日志 View-&gt;Tool Window-&gt;logcat   alt + 6</li>
+</ul>
+<h4 id="%E8%B0%83%E8%AF%95">调试</h4>
+<p>利用Log.d() 方法可以方便进行android应用程序调试, 该方法在LogCat窗口输出必要的值和信息.</p>
+<pre><code>import android.util.Log;
+Log.d(&quot;Testing&quot;, &quot;Checkpoint 1&quot;);
+</code></pre>
+<p>Log.d() 方法不支持变量, 可以通过String.format()格式化输出.</p>
+<h4 id="%E6%A3%80%E6%9F%A5%E4%BB%A3%E7%A0%81">检查代码</h4>
+<pre><code>cmd: lint .
+androidStudio: Analyze-&gt;Inspect Code.
+</code></pre>
+<h2 id="httpclient">HttpClient</h2>
+<p>因为android6.0 以后官方不在支持Httpclient</p>
+<h3 id="%E6%B7%BB%E5%8A%A0%E5%BA%93">添加库</h3>
+<h3 id="httpclient">httpclient</h3>
+<p>在模块build.properties</p>
+<ul>
+<li>
+<p>在android{}标签中添加</p>
+<p>useLibrary 'org.apache.http.legacy'</p>
+</li>
+<li>
+<p>在dependencies{}标签添加</p>
+<p>compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5.1'</p>
+</li>
+</ul>
+<h3 id="design">design</h3>
+<ul>
+<li>desgin
+implementation 'com.android.support:design:26.0.0-beta1'</li>
+</ul>
+
+

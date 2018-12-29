@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>mysql_database.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="sharebook-design">ShareBook design</h1>
+<pre><code>create database ShareBook;
+use ShareBook;
+</code></pre>
+<h2 id="%E7%AC%94%E8%AE%B0">笔记</h2>
+<h3 id="mysql-%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9">Mysql 查看帮助</h3>
+<pre><code>? contents
+? data types
+? create
+? create table
+? int
+? show
+</code></pre>
+<h3 id="%E8%A1%A8%E4%BF%AE%E6%94%B9">表修改</h3>
+<ul>
+<li>外键支持</li>
+</ul>
+<p>mysql只有InnoDB 引擎支持外键，所以可以在建表最后添加 engine=InnoDB 来更改默认引擎，也可以通过修改： alter table user engine = innodb;然后通过下面代码增加约束</p>
+<pre><code>alter table Admin add constraint foreign key (username) references User(username) on delete restrict on update cascade;
+</code></pre>
+<ul>
+<li>
+<p>查看表的详细描述信息</p>
+<p>show create table user \G;</p>
+</li>
+<li>
+<p>unique 字段约束设置</p>
+<p>alter table user add unique(user_email);</p>
+</li>
+<li>
+<p>添加外键约束</p>
+<p>alter table Admin add constraint foreign key (username) references User(username);</p>
+</li>
+<li>
+<p>删除外键</p>
+<p>alter table user drop foreign key fk_user_1;</p>
+</li>
+<li>
+<p>修改字段</p>
+<p>alter table user modify user_email varchar(21);</p>
+</li>
+<li>
+<p>添加列</p>
+<p>alter table user add column age int(3);</p>
+</li>
+<li>
+<p>删除字段</p>
+<p>alter table user drop column age;</p>
+</li>
+<li>
+<p>字段改名</p>
+<p>alter table user change age age1 int(4);</p>
+</li>
+<li>
+<p>修改字段顺序</p>
+<p>alter table user add birth date after ename;
+alter table user modify age int(3) first;</p>
+</li>
+<li>
+<p>表改名</p>
+<p>alter table user rename users;</p>
+</li>
+</ul>
+<h3 id="%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">数据操作</h3>
+<h4 id="%E6%8F%92%E5%85%A5">插入</h4>
+<ul>
+<li>
+<p>插入多条记录</p>
+<p>insert into user (username,pswd)
+values
+(&quot;warmfrog&quot;, &quot;159491&quot;),
+(&quot;warmfrog2&quot;, &quot;159492&quot;);</p>
+</li>
+</ul>
+<h4 id="%E6%9B%B4%E6%96%B0">更新</h4>
+<ul>
+<li>
+<p>更新多表记录</p>
+<p>update user a, book b set a.username=&quot;warmfrog11&quot;, b.book_name=&quot;Software&quot; where a.user_id=book.book_owner_id;</p>
+</li>
+</ul>
+<h4 id="%E6%9F%A5%E8%AF%A2">查询</h4>
+<ul>
+<li>
+<p>去重显示</p>
+<p>select distinct book_name from book;</p>
+</li>
+<li>
+<p>排序</p>
+<p>select * from user order by user_id;</p>
+</li>
+<li>
+<p>显示前3条记录</p>
+<p>select * from user order by user_id, register_time desc limit 3;</p>
+</li>
+</ul>
+<p>limit 和 order by 一起配合进行分页查询</p>
+<h4 id="%E5%88%A0%E9%99%A4%E5%A4%9A%E6%9D%A1%E8%AE%B0%E5%BD%95">删除多条记录</h4>
+<pre><code>delete from User where username in ('warmfrog10','warmfrog9');
+</code></pre>
+<h2 id="%E6%95%B0%E6%8D%AE%E8%A1%A8">数据表</h2>
+<h3 id="user">user</h3>
+<p>create table user(
+user_id bigint auto_increment,
+nickname varchar(20),
+password varchar(20),
+address varchar(50),
+register_time timestamp,
+phone_number varchar(11) unique,
+user_email varchar(20) unique,
+primary key (user_id)
+)engine=InnoDB character set=utf8;</p>
+<h3 id="book">book</h3>
+<pre><code>create table book(
+    book_id bigint auto_increment,
+    order_id bigint,
+    book_owner_id bigint,
+    book_name varchar(30),
+    book_author varchar(40),
+    book_author2 varchar(40),
+    book_translator varchar(40),
+    book_intro varchar(500),
+    book_publish_time timestamp,
+    book_publisher varchar(20),
+    book_edition tinyint,
+    book_isbn varchar(20),
+    book_rent_price float,
+    book_buy_price float,
+    foreign key(book_owner_id) references user(user_id) on delete cascade on update cascade,
+    foreign key(order_id) references orders(order_id),
+    primary key(book_id)
+  )engine=InnoDB character set=utf8;
+</code></pre>
+<h3 id="orders">orders</h3>
+<pre><code>create table orders(
+    order_id bigint auto_increment,
+    start_time timestamp,
+    trade_type varchar(10),
+    current_status varchar(10),
+    deliver_id bigint,
+    customer_id bigint,
+    primary key(order_id)
+  )engine=InnoDB character set=utf8;
+</code></pre>
+<h3 id="deliver">deliver</h3>
+<p>create table deliver(
+deliver_id bigint auto_increment,
+deliver_order_id bigint,
+deliver_status varchar(10),
+deliver_method varchar(10),
+foreign key(deliver_order_id) references orders(order_id) on delete restrict on update cascade,
+primary key (deliver_id)
+)engine=InnoDB character set=utf8;</p>
+
+</body>
+</html>

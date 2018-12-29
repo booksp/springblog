@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>javaweb_tomcat.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="%E5%BC%80%E5%8F%91java-web-tomcat-%E9%85%8D%E7%BD%AE">开发java web tomcat 配置</h1>
+<h2 id="tomcat-%E7%AF%87">tomcat 篇</h2>
+<ul>
+<li>FAQ https://wiki.apache.org/tomcat/FAQ</li>
+<li>WIKI https://wiki.apache.org/tomcat/</li>
+<li>tomcat9.0 home page http://tomcat.apache.org/tomcat-9.0-doc/index.html</li>
+</ul>
+<h2 id="tomcat-%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84">tomcat 安装路径</h2>
+<pre><code>C:\Program Files\Apache Software Foundation\Tomcat 9.0
+</code></pre>
+<h3 id="%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE">环境变量设置</h3>
+<ul>
+<li>CATALINA_HOME      &quot;C:\Program Files\Apache Software Foundation\Tomcat 9.0&quot;</li>
+<li>CLASS_PATH         %CATALINA_HOME%\lib;</li>
+</ul>
+<h2 id="%E7%9B%AE%E5%BD%95">目录</h2>
+<ul>
+<li>/bin</li>
+<li>/conf</li>
+<li>/logs</li>
+<li>/webapps</li>
+</ul>
+<h2 id="%E5%90%AF%E5%8A%A8tomcat-%E6%9C%8D%E5%8A%A1%E5%99%A8">启动tomcat 服务器</h2>
+<pre><code>startup
+</code></pre>
+<h2 id="jsp-%E7%AF%87">jsp 篇</h2>
+<h3 id="jsp-%E6%8C%87%E4%BB%A4">jsp 指令</h3>
+<ul>
+<li>jsp 代码写在 &lt;% %&gt; 中</li>
+</ul>
+<h4 id="page-%E6%8C%87%E4%BB%A4">page 指令</h4>
+<pre><code>&lt;%@ page language=&quot;java contentType=&quot;text/html; charset=GB18030&quot; pageEncoding=&quot;GB18030&quot; %&gt;
+</code></pre>
+<ul>
+<li>language</li>
+<li>extends 设置jsp页面继承的java类</li>
+<li>import 导入java包
+&lt;%@ import=&quot;java.util.*&quot; %&gt;</li>
+<li>pageEncoding
+&lt;%@ page pageEncoding=&quot;GB18030&quot; %&gt;</li>
+<li>contentType
+&lt;%@ page contentType=&quot;text/html; charset=UTF-8&quot; %&gt;</li>
+<li>session
+&lt;%@ page session=&quot;false&quot; %&gt;</li>
+<li>buffer 设置out缓冲区大小，默认8kb， 单位kb
+&lt;%@ page buffer=&quot;128kb&quot; %&gt;</li>
+<li>autoFlush 页面缓存满时是否刷新，默认 true
+&lt;%@ page autoFlush=&quot;true&quot; %&gt;</li>
+<li>isErrorPage
+&lt;%@ page isErrorPage=&quot;true&quot; %&gt;</li>
+<li>errorPage
+&lt;%@ page errorPage=&quot;error.jsp&quot; %&gt;</li>
+</ul>
+<h4 id="include-%E6%8C%87%E4%BB%A4">include 指令</h4>
+<pre><code>&lt;%@ include file=&quot;path&quot; %&gt;
+</code></pre>
+<ul>
+<li>被包含页面 &lt;%@ page pageEncoding=&quot;GB18030&quot; %&gt;</li>
+<li>包含页面   &lt;%@ page language=&quot;java&quot; contentType=&quot;text/html;charset=GB18030&quot; pageEncoding=&quot;GB18030&quot; %&gt;</li>
+</ul>
+<h4 id="taglib-%E6%8C%87%E4%BB%A4">taglib 指令</h4>
+<pre><code>&lt;%@ taglib prefix=&quot;tagPrefix&quot; url=&quot;tagURL&quot; %&gt;
+</code></pre>
+<ul>
+<li>
+<p>prefix 制定标签前缀</p>
+</li>
+<li>
+<p>uri 标签库存放位置</p>
+<p>&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt;</p>
+</li>
+</ul>
+<h3 id="jsp-%E8%84%9A%E6%9C%AC%E6%A0%87%E8%AF%86">jsp 脚本标识</h3>
+<ul>
+<li>表达式 &lt;% =表达式  %&gt;</li>
+<li>声明标识 &lt;%! 声明的代码%&gt;. 用于定义全局方法和变量，用于在整个jsp使用.</li>
+</ul>
+<h4 id="%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5">代码片段</h4>
+<pre><code>&lt;% java代码或者是片段 %&gt;
+</code></pre>
+<h4 id="jsp-%E6%B3%A8%E9%87%8A">jsp 注释</h4>
+<ul>
+<li>隐藏注释
+&lt;%-- --%&gt;</li>
+<li>动态注释
+&lt;%-- &lt;%=new Date()%&gt;--&gt;</li>
+</ul>
+<h3 id="jsp-%E5%8A%A8%E4%BD%9C%E6%A0%87%E8%AF%86">jsp 动作标识</h3>
+<ul>
+<li><a href="jsp:include">jsp:include</a> 包含文件标识
+&lt;jsp:include page=&quot;url&quot; flush=&quot;false|true&quot; /&gt;
+&lt;jsp:include page=&quot;url&quot; flush=&quot;false|true&quot;&gt; 子动作标识用于传递参数<a href="jsp:param">jsp:param</a>
+&lt;/jsp:include&gt;</li>
+</ul>
+<p>动态页面会被jsp编译器编译执行</p>
+<ul>
+<li>
+<p><a href="jsp:forward">jsp:forward</a>请求转发标识
+&lt;jsp:forward page=&quot;url&quot;/&gt;
+&lt;jsp:forward page=&quot;url&gt;
+子动作标识<a href="jsp:param">jsp:param</a>
+&lt;/jsp:forward&gt;</p>
+</li>
+<li>
+<p><a href="jsp:param">jsp:param</a>传递参数标识
+&lt;jsp:forward page=&quot;modify.jsp&quot;&gt;
+&lt;jsp:param name=&quot;userId&quot; value=&quot;7&quot;/&gt;
+&lt;/jsp:forward&gt;</p>
+</li>
+</ul>
+<h2 id="jsp-%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1">jsp 内置对象</h2>
+<h3 id="request">request</h3>
+<ul>
+<li>&lt;a href=delete.jsp?Id=1&quot;&gt;删除</a></li>
+<li>&lt;% request.getParameter(&quot;id&quot;) %&gt;</li>
+<li>request.setAttribute(String name, Object object);  请求转发时，将数据保存到request中</li>
+</ul>
+<h3 id="response">response</h3>
+<ul>
+<li>重定向网页 response.sendRedirect(String path);</li>
+</ul>
+<h4 id="%E5%A4%84%E7%90%86-http-%E8%A1%A8%E5%A4%B4">处理 HTTP 表头</h4>
+<ul>
+<li>
+<p>禁用缓存
+response.setHeader(&quot;Cache-Control&quot;,&quot;no-store&quot;);
+response.setDateHeader(&quot;Expires&quot;,0);</p>
+</li>
+<li>
+<p>设置页面自动刷新</p>
+<p>response.setHeader(&quot;refresh&quot;, &quot;10&quot;);</p>
+</li>
+<li>
+<p>定时跳转网页</p>
+<p>response.setHeader(&quot;refresh&quot;, &quot;5;URL=login.jsp&quot;);</p>
+</li>
+</ul>
+<h4 id="%E8%AE%BE%E7%BD%AE%E8%BE%93%E5%87%BA%E7%BC%93%E5%86%B2">设置输出缓冲</h4>
+<ul>
+<li>flushBuffer()</li>
+<li>getBufferSize()</li>
+<li>setBufferSize(int size)</li>
+<li>reset()</li>
+<li>isCommitted()</li>
+</ul>
+<h3 id="session">session</h3>
+<h4 id="%E5%88%9B%E5%BB%BA%E5%8F%8A%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E7%9A%84%E5%AF%B9%E8%AF%9D">创建及获取客户的对话</h4>
+<ul>
+<li>session.setAttribute(String name, Object obj);</li>
+<li>session.getAttribute(String name);</li>
+</ul>
+<h4 id="%E7%A7%BB%E9%99%A4%E5%88%B6%E5%AE%9A%E7%9A%84%E7%BB%91%E5%AE%9A%E5%AF%B9%E8%B1%A1">移除制定的绑定对象</h4>
+<ul>
+<li>session.removeAttribute(&quot;username&quot;);</li>
+</ul>
+<h4 id="%E9%94%80%E6%AF%81-session">销毁 session</h4>
+<ul>
+<li>session.invalidate();</li>
+</ul>
+<h4 id="%E8%B6%85%E6%97%B6%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86">超时会话管理</h4>
+<ul>
+<li>getLastAccessedTime()</li>
+<li>getMaxInactiveInterval()</li>
+<li>setMaxInactiveInterval()</li>
+</ul>
+<h3 id="application%E5%AF%B9%E8%B1%A1">application对象</h3>
+<p>application 对象用户保存所有应用程序中的共有数据。服务器启东时自动创建，服务器停止时销毁。</p>
+<h4 id="%E8%AE%BF%E9%97%AE%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%82%E6%95%B0">访问应用程序初始化参数</h4>
+<p>应用程序初始化参数在 web.xml文件中配置。通过<context-param> 配置</p>
+<pre><code>&lt;context-param&gt;
+    &lt;param-name&gt;url&lt;/param-name&gt;
+    &lt;param-value&gt;jdbc:mysql://localhost/db_database&lt;/param-value&gt;
+&lt;/context-param&gt;
+&lt;/web-app&gt;
+
+application.getInitParameter(String name);
+application.getInitParameter(&quot;url&quot;);
+</code></pre>
+<ul>
+<li>
+<p>getAttributeName()</p>
+<p>&lt;%
+Enumeration enema= application.getInitParameterNames();
+while(enema.hasMoreElements()){
+String name=(String)enema.nextElements();
+String value = application.getInitParameter(name);
+out.println(name+&quot;: &quot;);
+out.println(value);
+}
+%&gt;</p>
+</li>
+</ul>
+<h4 id="%E7%AE%A1%E7%90%86%E5%BA%94%E7%94%A8%E7%8E%AF%E5%A2%83%E5%B1%9E%E6%80%A7">管理应用环境属性</h4>
+<ul>
+<li>getAttributeNames()</li>
+<li>getAttribute(String name)</li>
+<li>setAttribute(String key, Object obj)</li>
+<li>removeAttribute(String name)</li>
+</ul>
+<h3 id="out-%E5%AF%B9%E8%B1%A1">out 对象</h3>
+<p>用于在web浏览器上输出信息，并且管理应用服务器上的输出缓冲区。</p>
+<ul>
+<li>向客户端输出数据
+out.print(&quot;&quot;);
+out.println(&quot;&quot;);</li>
+</ul>
+<h4 id="%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E7%BC%93%E5%86%B2">管理数据缓冲</h4>
+<ul>
+<li>clear()</li>
+<li>clearBuffer()</li>
+<li>flush()</li>
+<li>isAutoFlush()</li>
+<li>getBufferSize()</li>
+</ul>
+<h3 id="%E5%85%B6%E4%BB%96%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1">其他内置对象</h3>
+<h4 id="pagecontext">pageContext</h4>
+<p>通过pageContext 可以获取request,response,session,applicaition,exception 等对象。创建和初始化由容器完成。</p>
+<ul>
+<li>forward(java.lang.String relativeUrlpath)</li>
+<li>getAttribute(String name)</li>
+<li>getAttributeNamesInScope(int scope)</li>
+<li>getException()</li>
+<li>getRequest()</li>
+<li>getResponse()</li>
+<li>getSession()</li>
+<li>getOut()</li>
+<li>getApplication()</li>
+<li>setAttribute()</li>
+<li>removeAttribute()</li>
+</ul>
+<h4 id="%E8%AF%BB%E5%8F%96webxml%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E7%9A%84config%E5%AF%B9%E8%B1%A1">读取web.xml配置信息的config对象</h4>
+<ul>
+<li>getServletContext()</li>
+<li>getServletName()</li>
+<li>getInitParameter()</li>
+<li>getInitParameterNames()</li>
+</ul>
+<h4 id="%E5%BA%94%E7%AD%94%E6%88%96%E8%AF%B7%E6%B1%82%E7%9A%84page%E5%AF%B9%E8%B1%A1">应答或请求的page对象</h4>
+<p>page 对象代表jsp本身</p>
+<ul>
+<li>getClass()</li>
+<li>hashCode()</li>
+<li>toString()</li>
+<li>equals(Object o)</li>
+</ul>
+<h4 id="%E8%8E%B7%E5%8F%96%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF%E7%9A%84exception%E5%AF%B9%E8%B1%A1">获取异常信息的exception对象</h4>
+<p>getMessage()
+getLocalizedmessage()
+toString()
+fillInStackTrace()</p>
+
+</body>
+</html>
